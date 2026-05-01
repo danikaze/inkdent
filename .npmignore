@@ -1,0 +1,15 @@
+# Source & scripts
+src/
+scripts/
+
+# TypeScript config
+tsconfig*.json
+
+# Dev tooling & config
+node_modules/
+*.log
+.env*
+
+# Git
+.git/
+.gitignore

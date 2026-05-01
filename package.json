@@ -1,0 +1,64 @@
+{
+  "name": "inkdent",
+  "version": "0.1.0",
+  "description": "Simple logging library with scoped indentation and semantical formatting.",
+  "author": "",
+  "license": "MIT",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "postbuild": "tsx scripts/set-dist-formats.ts",
+    "clean": "rm -rf dist",
+    "test": "npm run typecheck && npm run lint && vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "lint": "eslint",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,css,scss,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+    "@types/node": "^25.6.0",
+    "@vitest/coverage-v8": "^4.1.5",
+    "eslint": "^9.39.4",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-github": "^6.0.0",
+    "eslint-plugin-unicorn": "^64.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.3",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.1",
+    "vitest": "^4.1.5"
+  }
+}
