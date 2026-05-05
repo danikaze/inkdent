@@ -1,3 +1,7 @@
+**inkdent**
+
+---
+
 # 🪶 Inkdent
 
 Simple logging library with scoped indentation and semantical formatting.
@@ -6,7 +10,7 @@ Simple logging library with scoped indentation and semantical formatting.
 npm install inkdent
 ```
 
-[[API documentation](./docs/globals.md)]
+[[API documentation](_media/globals.md)]
 
 ## Quick Start
 
@@ -35,7 +39,7 @@ ink
 
 This simple code will generate the following output:
 
-![alt text](imgs/quick-start-v0.1.0.png)
+![alt text](_media/quick-start-v0.1.0.png)
 
 ---
 
@@ -49,7 +53,7 @@ ink
   .warn();
 ```
 
-![alt text](imgs/quick-start-v0.1.0-warn.png)
+![alt text](_media/quick-start-v0.1.0-warn.png)
 
 ---
 
@@ -63,6 +67,6 @@ vfx.string('Initialized successfully').info();
 sfx.string('Error reading config files').error();
 ```
 
-![alt text](imgs/quick-start-v0.1.0-ns.png)
+![alt text](_media/quick-start-v0.1.0-ns.png)
 
-Or [dive into the documentation](./docs/globals.md) for more available methods and options.
+Or [dive into the documentation](_media/globals.md) for more available methods and options.

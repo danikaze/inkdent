@@ -18,7 +18,10 @@ export type InkdentOptions = {
 
 export type Styler = (...args: unknown[]) => string;
 
-type InkdentState = {
+/**
+ * Internal state of a `Inkdent` instance.
+ */
+export type InkdentState = {
   /** Current level of indentation */
   indent: number;
   /** Current namespace */
@@ -40,15 +43,23 @@ export type CloneOptions = {
   /**
    * Whether to clone the whole current instance state (`true`) or use the
    * default state (`false`), or an object with what option to clone (by
-   * default it clones the namespace and its padding (`{ns: true, nsPad: true }`)
+   * default it clones the namespace and its padding to preserve the visual
+   * options (`{ ns: true, nsPad: true }`)
    */
   state?: boolean | Partial<Record<keyof InkdentState, boolean>>;
 };
 
-type Styles = {
+/**
+ * Object defining the styles to use for each log level
+ */
+export type Styles = {
+  /** Defines the color of the `log()` level */
   log?: Styler;
+  /** Defines the color of the `info()` level */
   info?: Styler;
+  /** Defines the color of the `warn()` level */
   warn?: Styler;
+  /** Defines the color of the `error()` level */
   error?: Styler;
 };
 
@@ -293,7 +304,7 @@ export class Inkdent {
   /**
    * Adds a number to be formatted as a duration and added to the content log.
    *
-   * @param n Number of milliseconds to format as duration.
+   * @param ms Number of milliseconds to format as duration.
    * @returns Current instance for chaining
    */
   public duration(ms: number): this {
