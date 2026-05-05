@@ -1,0 +1,33 @@
+{
+  "plugin": ["typedoc-plugin-markdown"],
+  "entryPoints": ["src/index.ts"],
+  "outputs": [
+    {
+      "name": "markdown",
+      "path": "./docs",
+      "options": {
+        "cleanOutputDir": true,
+        "hideBreadcrumbs": true,
+        "useCodeBlocks": true,
+        "expandObjects": true,
+        "expandParameters": true,
+        "parametersFormat": "table",
+        "interfacePropertiesFormat": "table",
+        "typeAliasPropertiesFormat": "table",
+        "classPropertiesFormat": "table",
+        "enumMembersFormat": "table",
+        "propertyMembersFormat": "table",
+        "formatWithPrettier": true,
+        "tableColumnSettings": {
+          "hideDefaults": false,
+          "hideInherited": false,
+          "hideModifiers": false,
+          "hideOverrides": false,
+          "hideSources": true,
+          "hideValues": false,
+          "leftAlignHeaders": false
+        }
+      }
+    }
+  ]
+}
