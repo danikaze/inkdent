@@ -15,7 +15,7 @@ type InkdentOptions = {
 };
 ```
 
-Defined in: [index.ts:4](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L4)
+Defined in: [index.ts:4](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L4)
 
 ## Properties
 
