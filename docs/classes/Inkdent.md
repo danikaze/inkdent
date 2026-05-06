@@ -4,7 +4,7 @@
 
 # Class: Inkdent
 
-Defined in: [index.ts:94](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L94)
+Defined in: [index.ts:94](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L94)
 
 Simple logging library with scoped indentation and semantical formatting.
 
@@ -16,7 +16,7 @@ Simple logging library with scoped indentation and semantical formatting.
 new Inkdent(options?: InkdentOptions): Inkdent;
 ```
 
-Defined in: [index.ts:99](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L99)
+Defined in: [index.ts:99](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L99)
 
 #### Parameters
 
@@ -36,7 +36,7 @@ Defined in: [index.ts:99](https://github.com/danikaze/inkdent/blob/50865bd9a966f
 any(data: unknown): this;
 ```
 
-Defined in: [index.ts:430](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L430)
+Defined in: [index.ts:430](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L430)
 
 Adds any kind of data to the content to log, but it can't properly format
 some type of overlapping data (i.e. it can't detect a string as a path,
@@ -62,7 +62,7 @@ Current instance for chaining
 array<T>(data: T[]): this;
 ```
 
-Defined in: [index.ts:386](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L386)
+Defined in: [index.ts:386](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L386)
 
 Adds a formatted array of arbitrary data to the content to log.
 
@@ -92,7 +92,7 @@ Current instance for chaining
 bool(data: unknown): this;
 ```
 
-Defined in: [index.ts:320](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L320)
+Defined in: [index.ts:320](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L320)
 
 Adds a boolean to the content to log.
 
@@ -116,7 +116,7 @@ Current instance for chaining
 clone(options?: CloneOptions): Inkdent;
 ```
 
-Defined in: [index.ts:119](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L119)
+Defined in: [index.ts:119](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L119)
 
 Create a clone of the current instance.
 
@@ -143,7 +143,7 @@ a copy of the current instance
 duration(ms: number): this;
 ```
 
-Defined in: [index.ts:310](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L310)
+Defined in: [index.ts:310](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L310)
 
 Adds a number to be formatted as a duration and added to the content log.
 
@@ -167,7 +167,7 @@ Current instance for chaining
 empty(n?: number): this;
 ```
 
-Defined in: [index.ts:193](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L193)
+Defined in: [index.ts:193](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L193)
 
 Add an empty line.
 
@@ -194,7 +194,7 @@ Current instance for chaining
 error(): this;
 ```
 
-Defined in: [index.ts:247](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L247)
+Defined in: [index.ts:247](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L247)
 
 Commit the constructed contents to the `error` level.
 
@@ -214,7 +214,7 @@ Current instance for chaining
 info(): this;
 ```
 
-Defined in: [index.ts:223](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L223)
+Defined in: [index.ts:223](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L223)
 
 Commit the constructed contents to the `info` level.
 
@@ -234,7 +234,7 @@ Current instance for chaining
 log(): this;
 ```
 
-Defined in: [index.ts:211](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L211)
+Defined in: [index.ts:211](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L211)
 
 Commit the constructed contents to the `log` level.
 
@@ -254,7 +254,7 @@ Current instance for chaining
 nl(n?: number): this;
 ```
 
-Defined in: [index.ts:169](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L169)
+Defined in: [index.ts:169](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L169)
 
 Ensure a new line after the last logs.
 By default (unless the `keepEmptyLines` option is given at the constructor),
@@ -284,7 +284,7 @@ Current instance for chaining
 ns(namespace: string, styler?: Styler): this;
 ```
 
-Defined in: [index.ts:139](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L139)
+Defined in: [index.ts:139](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L139)
 
 Set the namespace to show on the log messages
 
@@ -309,7 +309,7 @@ Current instance for chaining
 number(n: string | number | BigInt): this;
 ```
 
-Defined in: [index.ts:299](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L299)
+Defined in: [index.ts:299](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L299)
 
 Adds a number to the content to log.
 
@@ -333,7 +333,7 @@ Current instance for chaining
 object<T>(data: T | null): this;
 ```
 
-Defined in: [index.ts:405](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L405)
+Defined in: [index.ts:405](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L405)
 
 Adds a formatted, arbitrary object to the content to log.
 
@@ -363,7 +363,7 @@ Current instance for chaining
 path(path: string): this;
 ```
 
-Defined in: [index.ts:330](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L330)
+Defined in: [index.ts:330](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L330)
 
 Adds a string formated as a path to the content to log.
 
@@ -387,7 +387,7 @@ Current instance for chaining
 pop(): this;
 ```
 
-Defined in: [index.ts:273](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L273)
+Defined in: [index.ts:273](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L273)
 
 Decrease a level of indentation. If it's already on the first level, the
 indentation level doesn't change.
@@ -408,7 +408,7 @@ Current instance for chaining
 push(): this;
 ```
 
-Defined in: [index.ts:259](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L259)
+Defined in: [index.ts:259](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L259)
 
 Increase a level of indentation.
 
@@ -428,7 +428,7 @@ Current instance for chaining
 string(str: string): this;
 ```
 
-Defined in: [index.ts:289](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L289)
+Defined in: [index.ts:289](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L289)
 
 Adds a raw string to log.
 
@@ -452,7 +452,7 @@ Current instance for chaining
 symbol(symbol: Symbol): this;
 ```
 
-Defined in: [index.ts:369](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L369)
+Defined in: [index.ts:369](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L369)
 
 Adds a formatted symbol to the content to log.
 
@@ -479,7 +479,7 @@ task(
    durationMs?: number): this;
 ```
 
-Defined in: [index.ts:346](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L346)
+Defined in: [index.ts:346](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L346)
 
 Adds a task to the content to log. It can be formatted with an optional
 passed or failed result, and an optional duration.
@@ -506,7 +506,7 @@ Current instance for chaining
 warn(): this;
 ```
 
-Defined in: [index.ts:235](https://github.com/danikaze/inkdent/blob/50865bd9a966fafb19fc7e36fb9495fead18c485/src/index.ts#L235)
+Defined in: [index.ts:235](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L235)
 
 Commit the constructed contents to the `warn` level.
 

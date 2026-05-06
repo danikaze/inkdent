@@ -4,15 +4,10 @@
   "description": "Simple logging library with scoped indentation and semantical formatting.",
   "author": "danikaze",
   "license": "MIT",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/esm/index.d.ts",
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "postbuild": "tsx scripts/set-dist-formats.ts && npm run docs",
+    "build": "tsc",
+    "postbuild": "npm run docs",
     "clean": "rm -rf dist",
     "docs": "typedoc",
     "test": "npm run typecheck && npm run lint && vitest run --coverage",
@@ -31,21 +26,12 @@
       "prettier --write"
     ]
   },
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/esm/index.d.ts",
-        "default": "./dist/esm/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/index.d.ts",
-        "default": "./dist/cjs/index.js"
-      }
-    }
-  },
   "files": [
     "dist"
   ],
+  "type": "module",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^25.6.0",
