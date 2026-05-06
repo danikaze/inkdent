@@ -14,7 +14,7 @@ type InkdentState = {
 };
 ```
 
-Defined in: [index.ts:24](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L24)
+Defined in: [index.ts:24](https://github.com/danikaze/inkdent/blob/42d74910ab6f23a463aefc31f17fd9681508e938/src/index.ts#L24)
 
 Internal state of a `Inkdent` instance.
 

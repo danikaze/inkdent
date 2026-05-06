@@ -8,7 +8,7 @@
 type Styler = (...args: unknown[]) => string;
 ```
 
-Defined in: [index.ts:19](https://github.com/danikaze/inkdent/blob/887bf9fd56767aa0dd0a97122855cee89c26b31a/src/index.ts#L19)
+Defined in: [index.ts:19](https://github.com/danikaze/inkdent/blob/42d74910ab6f23a463aefc31f17fd9681508e938/src/index.ts#L19)
 
 ## Parameters
 
