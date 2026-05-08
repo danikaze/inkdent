@@ -199,6 +199,23 @@ export class Inkdent {
     return this;
   }
 
+  /**
+   * Clears the pending input
+   *
+   * @returns Current instance for chaining
+   *
+   * @example
+   * ink.string('Fobar');
+   * ink.clear();
+   * ink.log(); // will output nothing
+   */
+  public clear(): this {
+    this.lines = [];
+    this.state.printNs = true;
+    this.state.nl = false;
+    return this;
+  }
+
   /* Log methods */
 
   /**
@@ -278,6 +295,20 @@ export class Inkdent {
     return this;
   }
 
+  /**
+   * Reset the level of indentation to zero.
+   * The next added content will appear in a new line.
+   *
+   * @returns Current instance for chaining
+   *
+   * @since 0.2.0
+   */
+  public resetIndentation(): this {
+    this.state.nl = true;
+    this.state.indent = 0;
+    return this;
+  }
+
   /* Formatting methods */
 
   /**
@@ -302,7 +333,54 @@ export class Inkdent {
   }
 
   /**
-   * Adds a number to be formatted as a duration and added to the content log.
+   * Adds a number formatted as a percentage to the content to log.
+   *
+   * @param ratio Ratio being 0 = 0% and 1 = 100%
+   * @param decimals Optional number of decimals to display. Defaults to 2.
+   * @returns Current instance for chaining
+   *
+   * @since 0.2.0
+   */
+  public pctg(ratio: number, decimals: number = 2): this {
+    return this.#addString(
+      chalk.yellow((ratio * 100).toFixed(decimals)) + chalk.dim.yellow('%')
+    );
+  }
+
+  /**
+   * Adds a fraction `A/B` the content to log.
+   *
+   * @param numerator numerator of the fraction
+   * @param denominator denominator of the fraction
+   * @param showPctg whether to show the calcualted percentage of the fraction
+   * @param pctgDecimals Optional number of decimals to display when `showPctg`
+   * is true. Defaults to 2.
+   * @returns Current instance for chaining
+   *
+   * @since 0.2.0
+   */
+  public fraction(
+    numerator: number,
+    denominator: number,
+    showPctg?: boolean,
+    pctgDecimals: number = 2
+  ): this {
+    this.#addString(`${chalk.yellow(numerator)}/${chalk.yellow(denominator)}`);
+    if (showPctg) {
+      this.#addString(
+        ' (' +
+          chalk.yellow(
+            ((numerator / denominator) * 100).toFixed(pctgDecimals)
+          ) +
+          chalk.dim.yellow('%') +
+          ')'
+      );
+    }
+    return this;
+  }
+
+  /**
+   * Adds a number to be formatted as a duration to the content log.
    *
    * @param ms Number of milliseconds to format as duration.
    * @returns Current instance for chaining
@@ -322,13 +400,25 @@ export class Inkdent {
   }
 
   /**
-   * Adds a string formated as a path to the content to log.
+   * Adds a string formatted as a path to the content to log.
    *
    * @param path String to log as a path
    * @returns Current instance for chaining
    */
   public path(path: string): this {
     return this.#addString(chalk.green(path));
+  }
+
+  /**
+   * Adss a string formatted as a link to the content to log.
+   *
+   * @param url URL to format
+   * @returns Current instance for chaining
+   *
+   * @since 0.2.0
+   */
+  public link(url: string): this {
+    return this.#addString(chalk.underline.blue(url));
   }
 
   /**
@@ -342,6 +432,8 @@ export class Inkdent {
    *   - `false` will show a failed task
    * @param durationMs Duration of the task in milliseconds
    * @returns Current instance for chaining
+   *
+   * @see taskResult
    */
   public task(taskName: string, variant?: boolean, durationMs?: number): this {
     this.state.nl = true;
@@ -352,6 +444,42 @@ export class Inkdent {
           ? chalk.green('✓ ')
           : chalk.red('✗ ')) +
         taskName +
+        (durationMs !== undefined
+          ? ` ${Inkdent.#formatDuration(durationMs)}`
+          : '')
+    );
+    this.state.nl = true;
+    return this;
+  }
+
+  /**
+   * Adds a task result to the content to log.
+   *
+   * Similar to `task()` but it doesn't show the task name, only the result. So
+   * it can be used for asynchronous tasks to show first the name, and then the
+   * result after it finishes.
+   *
+   * @param result Whether the task succeeded or not:
+   *   - `true` will show a passed task
+   *   - `false` will show a failed task
+   * @param durationMs Duration of the task in milliseconds
+   * @returns Current instance for chaining
+   *
+   * @example
+   * ink.string('- Starting task...');
+   * const t0 = Date.now();
+   * try {
+   *  await task();
+   *  ink.taskResult(true, Date.now() - t0);
+   * } catch {
+   *  ink.taskResult(false, Date.now() - t0);
+   * }
+   * @since 0.2.0
+   * @see task
+   */
+  public taskResult(result: boolean, durationMs?: number): this {
+    this.#addString(
+      (result ? chalk.green(' ✓') : chalk.red(' ✗')) +
         (durationMs !== undefined
           ? ` ${Inkdent.#formatDuration(durationMs)}`
           : '')

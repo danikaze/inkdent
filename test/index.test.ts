@@ -40,6 +40,14 @@ describe('Inkdent', () => {
       expect(consoleErrorMock).not.toHaveBeenCalled();
     });
 
+    test('Clear', () => {
+      const ink = new Inkdent();
+      ink.string('foobar');
+      ink.clear();
+      ink.log();
+      expect(consoleLogMock).not.toHaveBeenCalled();
+    });
+
     test('Console methods', () => {
       const ink = new Inkdent();
 
@@ -76,6 +84,24 @@ describe('Inkdent', () => {
           `${chalk.blue('│ ')}  level 2`,
           `${chalk.blue('│ ')}level 1`,
           `${chalk.blue('│ ')}still level 1`,
+        ].join('\n')
+      );
+    });
+
+    test('reset indentation', () => {
+      const ink = new Inkdent();
+      ink.string('level 1');
+      ink.push().string('level 2');
+      ink.push().string('level 3');
+      ink.resetIndentation().string('level 1');
+      ink.log();
+
+      expect(consoleLogMock).lastCalledWith(
+        [
+          `${chalk.blue('│ ')}level 1`,
+          `${chalk.blue('│ ')}  level 2`,
+          `${chalk.blue('│ ')}    level 3`,
+          `${chalk.blue('│ ')}level 1`,
         ].join('\n')
       );
     });
@@ -341,6 +367,57 @@ describe('Inkdent', () => {
       );
     });
 
+    test('pctg', () => {
+      const ink = new Inkdent();
+      ink
+        .pctg(0)
+        .nl()
+        .pctg(0.5123)
+        .nl()
+        .pctg(1.56789)
+        .nl()
+        .pctg(1.56789, 0)
+        .log();
+      expect(consoleLogMock).lastCalledWith(
+        [
+          `${chalk.blue('│ ')}${chalk.yellow('0.00')}${chalk.dim.yellow('%')}`,
+          `${chalk.blue('│ ')}${chalk.yellow('51.23')}${chalk.dim.yellow('%')}`,
+          `${chalk.blue('│ ')}${chalk.yellow('156.79')}${chalk.dim.yellow('%')}`,
+          `${chalk.blue('│ ')}${chalk.yellow('157')}${chalk.dim.yellow('%')}`,
+        ].join('\n')
+      );
+    });
+
+    test('fraction', () => {
+      const ink = new Inkdent();
+
+      ink.fraction(3, 8).log();
+      expect(consoleLogMock).lastCalledWith(
+        [
+          `${chalk.blue('│ ')}`,
+          `${chalk.yellow('3')}/${chalk.yellow('8')}`,
+        ].join('')
+      );
+
+      ink.fraction(50, 100, true).log();
+      expect(consoleLogMock).lastCalledWith(
+        [
+          `${chalk.blue('│ ')}`,
+          `${chalk.yellow('50')}/${chalk.yellow('100')}`,
+          ` (${chalk.yellow('50.00')}${chalk.dim.yellow('%')})`,
+        ].join('')
+      );
+
+      ink.fraction(75, 21, true, 3).log();
+      expect(consoleLogMock).lastCalledWith(
+        [
+          `${chalk.blue('│ ')}`,
+          `${chalk.yellow('75')}/${chalk.yellow('21')}`,
+          ` (${chalk.yellow('357.143')}${chalk.dim.yellow('%')})`,
+        ].join('')
+      );
+    });
+
     test('duration', () => {
       const ink = new Inkdent();
       ink.duration(123).nl(); // ms
@@ -404,6 +481,14 @@ describe('Inkdent', () => {
       );
     });
 
+    test('link', () => {
+      const ink = new Inkdent();
+      ink.link('/some/random/link').log();
+      expect(consoleLogMock).lastCalledWith(
+        `${chalk.blue('│ ')}${chalk.underline.blue('/some/random/link')}`
+      );
+    });
+
     test('task', () => {
       const ink = new Inkdent();
 
@@ -435,6 +520,34 @@ describe('Inkdent', () => {
             `${chalk.green(7)}${chalk.dim.green('s')}`,
             `${chalk.green(890)}${chalk.dim.green('ms')}`,
           ].join(' '),
+        ].join('\n')
+      );
+    });
+
+    test('taskResult', () => {
+      const ink = new Inkdent();
+
+      ink.string('task 1').taskResult(true).log();
+      expect(consoleLogMock).lastCalledWith(
+        [`${chalk.blue('│ ')}task 1${chalk.green(' ✓')}`].join('\n')
+      );
+
+      ink.string('task 2').taskResult(false).log();
+      expect(consoleLogMock).lastCalledWith(
+        [`${chalk.blue('│ ')}task 2${chalk.red(' ✗')}`].join('\n')
+      );
+
+      ink.string('task 3').taskResult(true, 123).log();
+      expect(consoleLogMock).lastCalledWith(
+        [
+          `${chalk.blue('│ ')}task 3${chalk.green(' ✓')} ${chalk.green('123')}${chalk.dim.green('ms')}`,
+        ].join('\n')
+      );
+
+      ink.string('task 4').taskResult(false, 456).log();
+      expect(consoleLogMock).lastCalledWith(
+        [
+          `${chalk.blue('│ ')}task 4${chalk.red(' ✗')} ${chalk.green('456')}${chalk.dim.green('ms')}`,
         ].join('\n')
       );
     });
