@@ -199,6 +199,23 @@ export class Inkdent {
     return this;
   }
 
+  /**
+   * Clears the pending input
+   *
+   * @returns Current instance for chaining
+   *
+   * @example
+   * ink.string('Fobar');
+   * ink.clear();
+   * ink.log(); // will output nothing
+   */
+  public clear(): this {
+    this.lines = [];
+    this.state.printNs = true;
+    this.state.nl = false;
+    return this;
+  }
+
   /* Log methods */
 
   /**

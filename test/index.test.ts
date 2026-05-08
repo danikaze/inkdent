@@ -40,6 +40,14 @@ describe('Inkdent', () => {
       expect(consoleErrorMock).not.toHaveBeenCalled();
     });
 
+    test('Clear', () => {
+      const ink = new Inkdent();
+      ink.string('foobar');
+      ink.clear();
+      ink.log();
+      expect(consoleLogMock).not.toHaveBeenCalled();
+    });
+
     test('Console methods', () => {
       const ink = new Inkdent();
 
