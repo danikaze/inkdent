@@ -1,6 +1,6 @@
 {
   "name": "inkdent",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Simple logging library with scoped indentation and semantical formatting.",
   "author": "danikaze",
   "license": "MIT",
