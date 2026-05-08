@@ -13,7 +13,7 @@ type Styles = {
 };
 ```
 
-Defined in: [index.ts:55](https://github.com/danikaze/inkdent/blob/42d74910ab6f23a463aefc31f17fd9681508e938/src/index.ts#L55)
+Defined in: [index.ts:55](https://github.com/danikaze/inkdent/blob/5874b67e1db4fd33214fb7d2ccd7cecc1503e79c/src/index.ts#L55)
 
 Object defining the styles to use for each log level
 

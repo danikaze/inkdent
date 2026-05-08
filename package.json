@@ -1,12 +1,12 @@
 {
   "name": "inkdent",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Simple logging library with scoped indentation and semantical formatting.",
   "author": "danikaze",
   "license": "MIT",
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "tsc",
+    "build": "tsc -p ./tsconfig.build.json",
     "postbuild": "npm run docs",
     "clean": "rm -rf dist",
     "docs": "typedoc",

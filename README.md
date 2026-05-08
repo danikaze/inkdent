@@ -1,5 +1,7 @@
 # 🪶 Inkdent
 
+[![Version](https://img.shields.io/npm/v/inkdent)](https://github.com/danikaze/inkdent/releases) ![CI](https://github.com/danikaze/inkdent/actions/workflows/cicd.yml/badge.svg)
+
 Simple logging library with scoped indentation and semantical formatting.
 
 ```
