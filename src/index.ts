@@ -61,7 +61,36 @@ export type Styles = {
   warn?: Styler;
   /** Defines the color of the `error()` level */
   error?: Styler;
+  /** Default styles of the table() method */
+  table?: Omit<TableOptions, 'header'>;
 };
+
+export type TableOptions = {
+  header?: TableColumnDefinition[];
+  padding?: string | [left: string, right: string];
+  vertical?: string;
+  horizontal?: string;
+  topLeft?: string;
+  top?: string;
+  ropRight?: string;
+  left?: string;
+  center?: string;
+  right?: string;
+  bottomLeft?: string;
+  bottom?: string;
+  bottomRight?: string;
+};
+
+export type TableColumnDefinition = {
+  /** Title to show in the header row */
+  title: string;
+  /** Alignment to use for the column */
+  align?: TextAlignment;
+  /** Alignment to use for the column title. Defaults to `align` */
+  titleAlign?: TextAlignment;
+};
+
+export type TextAlignment = 'left' | 'center' | 'right';
 
 const DEFAULT_OPTIONS: Required<InkdentOptions> = {
   indent: '  ',
@@ -74,6 +103,20 @@ const DEFAULT_OPTIONS: Required<InkdentOptions> = {
     info: chalk.gray,
     warn: chalk.yellow,
     error: chalk.red,
+    table: {
+      padding: ' ',
+      vertical: '│',
+      horizontal: '─',
+      topLeft: '┌',
+      top: '┬',
+      ropRight: '┐',
+      left: '├',
+      center: '┼',
+      right: '┤',
+      bottomLeft: '└',
+      bottom: '┴',
+      bottomRight: '┘',
+    },
   },
 };
 
@@ -100,7 +143,11 @@ export class Inkdent {
     this.options = {
       ...DEFAULT_OPTIONS,
       ...options,
-      styles: { ...DEFAULT_OPTIONS.styles, ...options?.styles },
+      styles: {
+        ...DEFAULT_OPTIONS.styles,
+        ...options?.styles,
+        table: { ...DEFAULT_OPTIONS.styles.table, ...options?.styles?.table },
+      },
     };
     this.ns(this.options.ns);
   }
@@ -572,6 +619,100 @@ export class Inkdent {
     return this;
   }
 
+  /**
+   * Adds tabulated data to the content to log.
+   *
+   * @param data Data to tabulate
+   * @param options Optional options to override the defaults or the ones given
+   * in the constructor
+   * @returns Current instance for chaining
+   */
+  public table(data: unknown[][], options: TableOptions = {}): this {
+    const opt = {
+      ...this.options.styles.table,
+      ...options,
+    } as Required<TableOptions>;
+    // Cells as rows x columns x lines of text
+    const cells: string[][][] = [];
+    const heights: number[] = [];
+    const widths: number[] = [];
+
+    for (let i = 0; i < data.length; i++) {
+      const row = data[i];
+      const cellsRow: string[][] = [];
+      heights[i] = 0;
+      for (let j = 0; j < row.length; j++) {
+        const cellLines = String(row[j]).split('\n');
+        const cellWidths = Math.max(
+          ...cellLines.map((line) => stripAnsi(line).length)
+        );
+        heights[i] = Math.max(heights[i], cellLines.length);
+        widths[j] = Math.max(widths[j] ?? 0, cellWidths);
+        cellsRow.push(cellLines);
+      }
+      cells.push(cellsRow);
+    }
+
+    if (opt.header) {
+      heights.unshift(1);
+      cells.unshift(
+        opt.header.map((col, j) => {
+          const lines = col.title.split('\n').map((line) => line);
+          heights[0] = Math.max(heights[0], lines.length);
+          const cellWidth = Math.max(
+            ...lines.map((line) => stripAnsi(line).length)
+          );
+          widths[j] = Math.max(widths[j] ?? 0, cellWidth);
+          return lines;
+        })
+      );
+    }
+
+    this.#addString(Inkdent.#getTableSeparatorLine('top', widths, opt)).nl();
+    if (opt.header) {
+      const alignments = opt.header.map(
+        (col) => col.titleAlign ?? col.align ?? 'left'
+      );
+      const strings = Inkdent.#getTableRowContent(
+        cells[0],
+        widths,
+        heights[0],
+        opt,
+        alignments
+      );
+      for (const str of strings) {
+        this.#addString(str).nl();
+      }
+      this.#addString(
+        Inkdent.#getTableSeparatorLine('header', widths, opt)
+      ).nl();
+    }
+    const alignments = opt.header.map((col) => col.align ?? 'left');
+    const cellSeparator = Inkdent.#getTableSeparatorLine(
+      'separator',
+      widths,
+      opt
+    );
+    for (let i = opt.header ? 1 : 0; i < cells.length; i++) {
+      const strings = Inkdent.#getTableRowContent(
+        cells[i],
+        widths,
+        heights[i],
+        opt,
+        alignments
+      );
+      for (const str of strings) {
+        this.#addString(str).nl();
+      }
+      if (i < cells.length - 1) {
+        this.#addString(cellSeparator).nl();
+      }
+    }
+    this.#addString(Inkdent.#getTableSeparatorLine('bottom', widths, opt)).nl();
+
+    return this;
+  }
+
   /* Private methods */
 
   #addString(str: string, fromNl: boolean = false): this {
@@ -657,5 +798,83 @@ export class Inkdent {
       },
       { ...defaults }
     );
+  }
+
+  static #getTableRowContent(
+    row: string[][],
+    widths: number[],
+    height: number,
+    options: Required<TableOptions>,
+    alignments: TextAlignment[]
+  ): string[] {
+    const lines: string[] = [];
+    const { vertical, padding } = options;
+
+    for (let i = 0; i < height; i++) {
+      const rowLine = row.map((lines) => lines[i] ?? []);
+      const line = widths
+        .map((w, j) => {
+          const text = Inkdent.#alignText(rowLine[j] ?? '', w, alignments[j]);
+          return padding + text.padEnd(w, ' ') + padding;
+        })
+        .join(vertical);
+      lines.push(vertical + line + vertical);
+    }
+
+    return lines;
+  }
+
+  static #getTableSeparatorLine(
+    type: 'top' | 'header' | 'separator' | 'bottom',
+    widths: number[],
+    options: Required<TableOptions>
+  ): string {
+    let left: string, center: string, right: string, horizontal: string;
+    const padding = options.padding;
+
+    if (type === 'top') {
+      left = options.topLeft;
+      center = options.top;
+      right = options.ropRight;
+      horizontal = options.horizontal;
+    } else if (type === 'bottom') {
+      left = options.bottomLeft;
+      center = options.bottom;
+      right = options.bottomRight;
+      horizontal = options.horizontal;
+    } else {
+      left = options.left;
+      center = options.center;
+      right = options.right;
+      horizontal = options.horizontal;
+    }
+
+    if (!left || !horizontal || !right) return '';
+    return (
+      left +
+      widths
+        .map((w) => horizontal.padEnd(w + padding.length * 2, horizontal))
+        .join(center) +
+      right
+    );
+  }
+
+  static #alignText(
+    text: string,
+    width: number,
+    alignment: TextAlignment
+  ): string {
+    const textLength = stripAnsi(text).length;
+    if (textLength >= width) return text;
+    const space = ' '.repeat(width - textLength);
+    if (alignment === 'left') {
+      return text + space;
+    } else if (alignment === 'right') {
+      return space + text;
+    } else {
+      const leftSpace = Math.floor((width - textLength) / 2);
+      const rightSpace = width - textLength - leftSpace;
+      return ' '.repeat(leftSpace) + text + ' '.repeat(rightSpace);
+    }
   }
 }

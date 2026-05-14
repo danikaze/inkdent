@@ -578,16 +578,18 @@ describe('Inkdent', () => {
         .log();
       expect(consoleLogMock).lastCalledWith(
         [
-          `${chalk.blue('│ ')}{`,
-          `${chalk.blue('│ ')}  s: "string",`,
-          `${chalk.blue('│ ')}  n: ${chalk.yellow(123.456)},`,
-          `${chalk.blue('│ ')}  o: {`,
-          `${chalk.blue('│ ')}    f: ${chalk.yellow('false')},`,
-          `${chalk.blue('│ ')}    t: ${chalk.yellow('true')},`,
-          `${chalk.blue('│ ')}    n: ${chalk.red('null')},`,
-          `${chalk.blue('│ ')}  },`,
-          `${chalk.blue('│ ')}}`,
-        ].join('\n')
+          `{`,
+          `  s: "string",`,
+          `  n: ${chalk.yellow(123.456)},`,
+          `  o: {`,
+          `    f: ${chalk.yellow('false')},`,
+          `    t: ${chalk.yellow('true')},`,
+          `    n: ${chalk.red('null')},`,
+          `  },`,
+          `}`,
+        ]
+          .map((line) => `${chalk.blue('│ ')}${line}`)
+          .join('\n')
       );
     });
 
@@ -601,6 +603,43 @@ describe('Inkdent', () => {
       expect(ink.any(Symbol('Name'))).toBe(ink.symbol(Symbol('Name')));
       expect(ink.any([1, 2, 3])).toBe(ink.array([1, 2, 3]));
       expect(ink.any({ n: 1, s: 'str' })).toBe(ink.object({ n: 1, s: 'str' }));
+    });
+
+    test('table', () => {
+      const ink = new Inkdent();
+      ink
+        .table(
+          [
+            ['foo', 'bar', 'center', 'right'],
+            ['Long cell', 'baz', 'x', 'x'],
+            ['Long cell', 'baz', 'xx', 'xx'],
+          ],
+          {
+            header: [
+              { title: 'Col 1' },
+              { title: 'Long header' },
+              { title: 'Centered Col', align: 'center' },
+              { title: 'Right Col', align: 'right' },
+            ],
+          }
+        )
+        .log();
+
+      expect(consoleLogMock).lastCalledWith(
+        [
+          '┌───────────┬─────────────┬──────────────┬───────────┐',
+          '│ Col 1     │ Long header │ Centered Col │ Right Col │',
+          '├───────────┼─────────────┼──────────────┼───────────┤',
+          '│ foo       │ bar         │    center    │     right │',
+          '├───────────┼─────────────┼──────────────┼───────────┤',
+          '│ Long cell │ baz         │      x       │         x │',
+          '├───────────┼─────────────┼──────────────┼───────────┤',
+          '│ Long cell │ baz         │      xx      │        xx │',
+          '└───────────┴─────────────┴──────────────┴───────────┘',
+        ]
+          .map((line) => `${chalk.blue('│ ')}${line}`)
+          .join('\n')
+      );
     });
   });
 
